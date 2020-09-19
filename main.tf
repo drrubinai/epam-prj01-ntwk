@@ -42,7 +42,7 @@ resource "aws_instance" "example" {
 
   user_data = <<-EOF
               #!/bin/bash
-              echo "Hello, World" > index.html
+              echo "Hello, World with more open ports." > index.html
               nohup busybox httpd -f -p "${var.server_port}" &
               EOF
 
@@ -62,6 +62,14 @@ resource "aws_security_group" "instance" {
   ingress {
     from_port   = var.server_port
     to_port     = var.server_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Inbound HTTP from anywhere
+  ingress {
+    from_port   = var.additional_port
+    to_port     = var.additional_port
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
