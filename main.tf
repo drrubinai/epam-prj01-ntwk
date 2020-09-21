@@ -73,4 +73,12 @@ resource "aws_security_group" "instance" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  # Inbound HTTP from anywhere
+  ingress {
+    from_port   = 8088
+    to_port     = 8088
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
